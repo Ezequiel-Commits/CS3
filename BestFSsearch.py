@@ -44,7 +44,7 @@ def BestFSsearch(specificProblem):
                 print(nextNode.state)
             return
         
-        ExploredValues.append(nextNode.state)
+        ExploredValues.append(nextNode.state) # We want the nextNode.state to be appended
 
         # Get successors now gives action cost as well 
         successors = specificProblem.getSuccessors( nextNode.state )
@@ -56,7 +56,6 @@ def BestFSsearch(specificProblem):
                 frontier.enqueue( Node(successor, nextNode) ) 
 
 # Questions:
-    # my successor loop keeps on adding "Z" and "O"
+    # 
 # Notes:
-    # Still have to replace a duplicate path with different costs somehow 
-    # Don't exactly get the second conditional in line 49, nor that loop in general 
+    # Still have to replace a duplicate path with different costs somehow. Different design choices 
