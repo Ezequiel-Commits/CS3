@@ -113,33 +113,81 @@ class ticTacToe(NewProblem.ProblemClass): # Inherit the problem super class from
         # Else, the state is not an end state
         return (False, None)
             
+    def argMax(self, childScores):
+        # Find the maximum score given a list of childScores
+        maxScore = childScores[0][0]
+        for element in childScores:
+            # Get the score associated with an element
+            if element[0] > maxScore:
+                maxScore = element[0]
+        return maxScore
+    
+    def argMaxPos(self, childScores):
+        # Find the maximum score position given a list of childScores
+        maxScore = childScores[0]
+        maxScorePos = childScores[0]
+        for i in range( len(childScores) ):
+            # Get the score associated with an element
+            if childScores[i] > maxScore:
+                maxScore = childScores[i]
+                maxScorePos = i
+        return maxScorePos
 
+    def argMin(self, childScores):
+        # Find the mimimum score given a list of childScores
+        minScore = 2
+        # print(maxScore)
+        for element in childScores:
+            # Get the score associated with an element
+            if element[0] < minScore:
+                minScore = element[0]
+        return minScore
+
+    def prettyPrint(self, state):
+        # Turn each "1" or "-1" into an x or o 
+        newState = copy.deepcopy(state)
+        for row in range( len(newState) ):
+            for column in range(3):
+                if newState[row][column] == 1:
+                    
+                elif newState[row][column] == -1:
+                    pass
+
+        # print each row on a diff line
+        for row in newState: 
+            print(row)
+        return
 
     def miniMax(self, state):
         # Building a tree for the miniMax algorithm 
         (end, score) = self.isGoal(state)
         if end == True:
-            # Check if a branch has been fully explored
-            return score
+            return score, state
         else:
             childScores = []
             # Go through each childState given by the getSuccessors function
             for childState in self.getSuccessors(state):
                 # Recurse to get the score of the child
                 childScore = self.miniMax(childState)
-                # Add that score to a table of childScores
+                # Add that score, as well as the state associated with that score to a table of childScores
                 childScores.append((childScore[0], childState))
         
-        # Given all successors and whose turn it is, determine the next best move
         Turn = self.whoseTurn(state)
 
         # Choose the top level action with the highest or lowest val, depending on whose turn it is
         if Turn == 1:
-            return max(childScores)
+            # Get the position of the max child score
+            for i in range( len(childScores) ):
+                if childScores[i][0] == self.argMax(childScores):
+                    return self.argMax(childScores), childScores[i][1]
         elif Turn == -1:
-            return min(childScores)# Doesn't work a full board
+            # Get the position of the min child score
+            for i in range( len(childScores) ):
+                if childScores[i][0] == self.argMin(childScores):
+                    return self.argMin(childScores), childScores[i][1]
 
 # Notes:
     # Design choices 
 
 # Questions:
+    # 
