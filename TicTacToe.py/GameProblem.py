@@ -149,14 +149,45 @@ class ticTacToe(NewProblem.ProblemClass): # Inherit the problem super class from
         for row in range( len(newState) ):
             for column in range(3):
                 if newState[row][column] == 1:
-                    
+                    newState[row][column] = "x"
                 elif newState[row][column] == -1:
-                    pass
+                    newState[row][column] = "o"
 
         # print each row on a diff line
         for row in newState: 
             print(row)
         return
+
+    def makeAMove(self, state, xCoord, yCoord):
+        # Given an x and y coordinate, have the player place a piece on the board. 
+        # Find out whose turn it is
+        Turn = self.whoseTurn(state)
+        newState = copy.deepcopy(state)
+        for row in range( len(newState) ):
+            for column in range(3):
+                # access the x and y coordinate on the board. 
+                if newState[row][column] == newState[yCoord][xCoord]:
+                    if Turn == 1:
+                        newState[row][column] = 1
+                    else:
+                        newState[row][column] = -1
+
+    def makeAMove2(self, state, xCoord, yCoord):
+        # Given an x and y coordinate, have the player place a piece on the board. 
+        # Have a prompt for the user to enter coordinates
+        # Change the board to reflect the user's move
+        # Use this as a helper function in a gameplay loop 
+        Turn = self.whoseTurn(state)
+        newState = copy.deepcopy(state)
+        for row in range( len(newState) ):
+            for column in range(3):
+                # access the x and y coordinate on the board. 
+                if newState[row][column] == newState[yCoord][xCoord]:
+                    if Turn == 1:
+                        newState[row][column] = 1
+                    else:
+                        newState[row][column] = -1
+
 
     def miniMax(self, state):
         # Building a tree for the miniMax algorithm 
@@ -190,4 +221,5 @@ class ticTacToe(NewProblem.ProblemClass): # Inherit the problem super class from
     # Design choices 
 
 # Questions:
-    # 
+    # Were you hoping for a gameplay loop? 
+        # Basic user interfacing, using a game instance. 
