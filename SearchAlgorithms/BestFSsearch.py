@@ -3,7 +3,7 @@
 # BFS (BIFO)
 
 import DataStructures
-import Problem
+import ProblemDefinitions.Problem as Problem
 
 class Node:
     def __init__(self, state = None, parent = None): # Add a cost data member? 

@@ -1,9 +1,9 @@
-""" A depth first search algorithm to find a path to the goal """
+""" A search algorithm to find a path to the goal """
 
-# DFS (LIFO)
+# BFS (FIFO)
 
 import DataStructures
-import Problem
+import ProblemDefinitions.Problem as Problem
 
 class Node:
     def __init__(self, state = None, parent = None):
@@ -21,16 +21,18 @@ def searchForState(node):
         return None
     
 
-def DFSSearch(specificProblem):
-    frontier = DataStructures.Stack()
+def BFSSearch(specificProblem):
+    """ Run BFS on the specific problem """
+    frontier = DataStructures.Queue()
     # Add the initial state to the frontier
     initialNode = Node(specificProblem.initState, None)
-    frontier.push(initialNode)
+    frontier.enqueue(initialNode)
     # Initialize an array of explored "nodes"
     ExploredValues = []
-    while frontier.myStack != []:
+
+    while frontier.myQueue != []:
         # choose a frontier node which serves as a state
-        nextNode = frontier.pop()
+        nextNode = frontier.dequeue()
 
         if specificProblem.isGoal( nextNode.state ):
             print(nextNode.state)
@@ -38,6 +40,9 @@ def DFSSearch(specificProblem):
                 nextNode = nextNode.parent
                 print(nextNode.state)
             return
+            # for parents in nextNode.parent:
+                # return the solution by returning a list of all the actions
+
 
         # Add the node to the explored set 
         ExploredValues.append(nextNode.state) # Memorization
@@ -46,11 +51,7 @@ def DFSSearch(specificProblem):
         
         for successor in successors: 
             listedState = searchForState(nextNode)
-            if (successor not in ExploredValues) and (listedState not in frontier.myStack): #Compare the state(successor) to nextNode states in the frontier 
-                frontier.push( Node(successor, nextNode) ) #Not sure this is what Proshanto wanted me to do
-
-    print("returning this false")    
+            if (successor not in ExploredValues) and (listedState not in frontier.myQueue): #Compare the state(successor) to nextNode states in the frontier 
+                frontier.enqueue( Node(successor, nextNode) ) #Not sure this is what Proshanto wanted me to do
+        
     return False
-
-# Notes:
-    # I assume my problem is between lines 47 and 50; likely in the searchForState function 

@@ -1,4 +1,4 @@
-import Problem
+import ProblemDefinitions.Problem as Problem
 
 class travelProblem( Problem.ProblemClass ):
     """ Arbitray state:

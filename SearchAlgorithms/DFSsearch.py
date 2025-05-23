@@ -1,9 +1,9 @@
-""" A search algorithm to find a path to the goal """
+""" A depth first search algorithm to find a path to the goal """
 
-# BFS (FIFO)
+# DFS (LIFO)
 
 import DataStructures
-import Problem
+import ProblemDefinitions.Problem as Problem
 
 class Node:
     def __init__(self, state = None, parent = None):
@@ -21,18 +21,16 @@ def searchForState(node):
         return None
     
 
-def BFSSearch(specificProblem):
-    """ Run BFS on the specific problem """
-    frontier = DataStructures.Queue()
+def DFSSearch(specificProblem):
+    frontier = DataStructures.Stack()
     # Add the initial state to the frontier
     initialNode = Node(specificProblem.initState, None)
-    frontier.enqueue(initialNode)
+    frontier.push(initialNode)
     # Initialize an array of explored "nodes"
     ExploredValues = []
-
-    while frontier.myQueue != []:
+    while frontier.myStack != []:
         # choose a frontier node which serves as a state
-        nextNode = frontier.dequeue()
+        nextNode = frontier.pop()
 
         if specificProblem.isGoal( nextNode.state ):
             print(nextNode.state)
@@ -40,9 +38,6 @@ def BFSSearch(specificProblem):
                 nextNode = nextNode.parent
                 print(nextNode.state)
             return
-            # for parents in nextNode.parent:
-                # return the solution by returning a list of all the actions
-
 
         # Add the node to the explored set 
         ExploredValues.append(nextNode.state) # Memorization
@@ -51,7 +46,11 @@ def BFSSearch(specificProblem):
         
         for successor in successors: 
             listedState = searchForState(nextNode)
-            if (successor not in ExploredValues) and (listedState not in frontier.myQueue): #Compare the state(successor) to nextNode states in the frontier 
-                frontier.enqueue( Node(successor, nextNode) ) #Not sure this is what Proshanto wanted me to do
-        
+            if (successor not in ExploredValues) and (listedState not in frontier.myStack): #Compare the state(successor) to nextNode states in the frontier 
+                frontier.push( Node(successor, nextNode) ) #Not sure this is what Proshanto wanted me to do
+
+    print("returning this false")    
     return False
+
+# Notes:
+    # I assume my problem is between lines 47 and 50; likely in the searchForState function 
